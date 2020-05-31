@@ -1,0 +1,18 @@
+{
+  "name": "UBLS-production",
+  "port": 3000,
+  "extended-urlEnconded": true,
+  "serveStaticFiles": true,
+  "useHelmet": true,
+  "useMorgan": true,
+  "useMorganFormats": "tiny",
+  "log-console": false,
+  "log-file": true,
+  "log-file-path": "/",
+  "log-settings": {
+    "info": true,
+    "debug": true,
+    "error": true,
+    "setup": true
+  }
+}

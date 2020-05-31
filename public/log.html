@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>UBLS Public resources example</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="icon"
+      href="http://localhost:3000/spa-no-background-large.png"
+      type="image/x-icon"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    style="
+      background-color: cadetblue;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    "
+  >
+    <div style="background-color: beige;">
+      <img
+        style="
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          padding-top: 6%;
+        "
+        src="http://localhost:3000/log.png"
+        alt="log example"
+      />
+      <div style="background-color: beige; text-align: center;">
+        [console with Log enabled]
+      </div>
+      <br /><br />
+    </div>
+    <div style="background-color: beige; text-align: left;">
+      This image show the enabled log with colors. <br />
+      There are two options to set <br />
+      >log-file: true means All the logs will be saved in log file.
+      <br />
+      >log-settings: {
+
+      <br />"info": true,<br />
+      "debug": true,<br />
+      "error": true,<br />
+      "setup": true <br />
+      } <br />
+      Here you can choose which messages to show in development and production
+      environment. <br />
+      Keys with false value will be ignored and will not be showed in console.
+      <br />
+      <br />
+
+      <a href="http://localhost:3000/index.html">Visit our tutorial Page</a>
+    </div>
+  </body>
+</html>
