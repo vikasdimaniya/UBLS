@@ -64,5 +64,21 @@ router.delete("/", (req, res) => {
   });
   res.send(users);
 });
+router.put("/", (req, res) => {
+  //validation for req.body.user
+  const { error } = validateNewUser(req.body.user);
+  if (!error) {
+    console.log("edit added: ", req.body);
+    if (user.name === req.body.user.name) {
+      users.password = req.body.user.password;
+      return false;
+    } else {
+      return true;
+    }
+    res.send(users);
+  } else {
+    res.status(400).send(error.details[0].message);
+  }
+});
 
 module.exports = router;

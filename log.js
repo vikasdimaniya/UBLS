@@ -3,9 +3,9 @@ module.exports = class Log {
   logFile = false;
   logPath = "";
   constructor(logFile, path, envInfo) {
-    this.envInfo = envInfo;
     this.logFile = logFile;
     this.logPath = path;
+    this.envInfo = envInfo;
   }
   getTime() {
     let ts = Date.now();
