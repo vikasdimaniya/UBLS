@@ -7,9 +7,7 @@ const morgan = require("morgan");
 //LOCAL MODULES
 const Log = require("./log");
 const user = require("./routes/user");
-const app = express();
-const port = process.env.PORT || config.get("port");
-app.listen(port, () => log.info(`Listening on port ${port}...`));
+const authenticate = require("./routes/authenticate");
 
 //CLASS DEFINATIONS
 let log = new Log(
@@ -18,18 +16,32 @@ let log = new Log(
   config.get("log-settings")
 );
 
+const app = express();
+const port = process.env.PORT || config.get("port");
+app.listen(port, () => log.info(`Listening on port: ${port}`));
+
 log.info(
   config.get("name") + " is starting in " + app.get("env") + " environment"
 );
 
 //SETTING MIDDLEWARE FOR EXPRESS
-app.use(express.json());
 app.use(helmet());
+app.use(express.json());
+//******************This is a Custom Middleware********************* */
+/*
+app.use(customMiddleware);
+function customMiddleware(req, res, next) {
+  log.info("custom middleware");
+  next();
+}
+*/
 if (config.get("extended-urlEnconded")) {
   log.conf("Extended url encoding enabled");
   app.use(express.urlencoded({ extended: true }));
 } else app.use(express.urlencoded());
+//To serve static files
 if (config.get("serveStaticFiles")) app.use(express.static("public"));
+//for HTTP request logging
 if (config.get("useMorgan")) app.use(morgan("tiny"));
 
 //API CALLS
