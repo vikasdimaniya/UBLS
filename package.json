@@ -1,5 +1,5 @@
 {
-  "name": "UBLS-userBasedLoginSystem",
+  "name": "UBLS",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,9 +14,10 @@
     "config": "^3.3.1",
     "debug": "^4.1.1",
     "express": "^4.17.1",
-    "helmet": "^3.22.0",
+    "helmet": "^3.23.2",
     "joi": "^14.3.1",
     "joi-password-complexity": "^4.1.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "winston": "^3.3.3"
   }
 }

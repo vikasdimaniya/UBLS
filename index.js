@@ -5,17 +5,14 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 //LOCAL MODULES
-const Log = require("./log");
+const Logger = require("./log");
 const user = require("./routes/user");
 const authenticate = require("./routes/authenticate");
 
 //CLASS DEFINATIONS
-let log = new Log(
-  config.get("log-file"),
-  config.get("log-file-path"),
-  config.get("log-settings")
-);
-
+let log1 = new Logger(config);
+let log = log1.getLogger();
+//console.log(log);
 const app = express();
 const port = process.env.PORT || config.get("port");
 app.listen(port, () => log.info(`Listening on port: ${port}`));
