@@ -23,6 +23,7 @@ Morgan formats: tiny, combined, common, dev and short
 joi-password-complexity
 
 **_Future work:_**  
+require modules only if module is required by the end-user of UBLS  
 use bluebird insted of when  
 use winston insted of custom made logger
 pass log to all modules through settings, remove console.log  
