@@ -15,7 +15,7 @@ let log = log1.getLogger();
 //console.log(log);
 const app = express();
 const port = process.env.PORT || config.get("port");
-app.listen(port, () => log.info(`Listening on port: ${port}`));
+app.listen(port, () => log.conf(`Listening on port: ${port}`));
 
 log.info(
   config.get("name") + " is starting in " + app.get("env") + " environment"
@@ -71,4 +71,8 @@ app.get("/:val/:val2", (req, res) => {
       port +
       "/someValue/someOtherValue?sortBy=name"
   );
+});
+
+process.on("uncaughtException", (err, origin) => {
+  log.error(`Caught exception: ${err}\n` + `Exception origin: ${origin}`);
 });

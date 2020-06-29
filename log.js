@@ -1,17 +1,30 @@
 const { createLogger, format, transports } = require("winston");
 const { combine, timestamp, printf } = format;
-let CustomLevels = {
-  emerg: 0,
-  alert: 1,
-  crit: 2,
-  error: 3,
-  warning: 4,
-  notice: 5,
-  conf: 6,
-  info: 7,
-  debug: 8,
+const LevelData = {
+  levels: {
+    emerg: 0,
+    alert: 1,
+    crit: 2,
+    error: 3,
+    warning: 4,
+    notice: 5,
+    conf: 6,
+    info: 7,
+    debug: 8,
+  },
+  colors: {
+    emerg: "red",
+    alert: "white",
+    crit: "green",
+    error: "yellow",
+    warning: "blue",
+    notice: "magenta",
+    conf: "cyan",
+    info: "white",
+    debug: "grey",
+  },
 };
-const myFormat = printf(({ level, message, label, timestamp }) => {
+const myFormat = printf(({ level, message, timestamp }) => {
   return `${timestamp} ${level}: ${message}`;
 });
 
@@ -44,7 +57,7 @@ class Logger {
     }
 
     this.logger = createLogger({
-      levels: CustomLevels,
+      levels: LevelData.levels,
       format: combine(timestamp(), myFormat),
       //format: format.json(),
       defaultMeta: { service: config.get("name") + "-service" },
@@ -54,7 +67,10 @@ class Logger {
     if (config.get("log-on-console")) {
       this.logger.add(
         new transports.Console({
-          format: myFormat,
+          format: format.combine(
+            format.colorize({ colors: LevelData.colors }),
+            myFormat
+          ),
         })
       );
     }
@@ -64,6 +80,8 @@ class Logger {
   }
 }
 module.exports = Logger;
+
+//OLD VERSION
 // module.exports = class Log {
 //   envInfo = {};
 //   logFile = false;
