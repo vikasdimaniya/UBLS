@@ -25,6 +25,9 @@ const LevelData = {
   },
 };
 const myFormat = printf(({ level, message, timestamp }) => {
+  if (typeof message === "object") {
+    message = JSON.stringify(message);
+  }
   return `${timestamp} ${level}: ${message}`;
 });
 
@@ -64,16 +67,14 @@ class Logger {
       transports: transportArray,
     });
 
-    if (config.get("log-on-console")) {
-      this.logger.add(
-        new transports.Console({
-          format: format.combine(
-            format.colorize({ colors: LevelData.colors }),
-            myFormat
-          ),
-        })
-      );
-    }
+    this.logger.add(
+      new transports.Console({
+        format: format.combine(
+          format.colorize({ colors: LevelData.colors }),
+          myFormat
+        ),
+      })
+    );
   }
   getLogger() {
     return this.logger;

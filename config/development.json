@@ -7,7 +7,7 @@
   "useHelmet": true,
   "useMorgan": true,
   "useMorganFormats": "tiny",
-  "log-on-console": true,
+  "console-silent": false,
   "log-in-file": false,
   "log-file-path": "",
   "log-settings": {
@@ -15,5 +15,6 @@
     "debug": true,
     "error": true,
     "setup": true
-  }
+  },
+  "databaseURI": "mongodb://localhost:27017/ubls"
 }
