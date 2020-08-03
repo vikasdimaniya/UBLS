@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 let settings;
 let log;
 let config;
+let db;
 
 //LOCAL FUNCTIONS
 
@@ -19,14 +20,12 @@ function init(_settings) {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then((res) => {
-      if (res) {
-        log.info(res);
-        log.info("Connection establised");
-      }
+    .then(() => {
+      log.info("Connection establised");
+      db = mongoose;
     })
     .catch((err) => {
-      log.error(err);
+      log.error("Database Connection Error: " + err);
     });
 }
 
