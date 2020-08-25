@@ -1,5 +1,5 @@
 {
-  "name": "UBLS",
+  "name": "ubls",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,9 +14,11 @@
     "config": "^3.3.1",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "g": "^2.0.1",
     "helmet": "^3.23.2",
     "joi": "^14.3.1",
     "joi-password-complexity": "^4.1.0",
+    "mongoose": "^5.9.22",
     "morgan": "^1.10.0",
     "winston": "^3.3.3"
   }

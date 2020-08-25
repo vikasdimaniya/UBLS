@@ -1,22 +1,27 @@
 //NPM MODULES
-const config = require("config");
 const express = require("express");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
 //LOCAL MODULES
-const Logger = require("./log");
-const user = require("./routes/user");
-const authenticate = require("./routes/authenticate");
-
-//CLASS DEFINATIONS
-let log1 = new Logger(config);
-let log = log1.getLogger();
-//console.log(log);
+const user = require("./App/API/user");
+const authenticate = require("./App/API/authenticate");
+const settings = require("./settings");
+const storage = require("./App/Storage");
+const config = settings.config;
+const log = settings.log;
 const app = express();
 const port = process.env.PORT || config.get("port");
-app.listen(port, () => log.conf(`Listening on port: ${port}`));
 
+//CLASS DEFINATIONS
+if (config.get("console-silent")) {
+  log.conf("Console messages are Silent");
+  log.transports[2].silent = true;
+} else {
+  console.log("Console messages are On");
+}
+storage.init(settings);
+app.listen(port, () => log.conf(`Listening on port: ${port}`));
 log.info(
   config.get("name") + " is starting in " + app.get("env") + " environment"
 );
@@ -24,7 +29,7 @@ log.info(
 //SETTING MIDDLEWARE FOR EXPRESS
 app.use(helmet());
 app.use(express.json());
-//******************This is a Custom Middleware********************* */
+//******************This is A DEMO of Custom Middleware function********************* */
 /*
 app.use(customMiddleware);
 function customMiddleware(req, res, next) {

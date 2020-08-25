@@ -23,11 +23,15 @@ Morgan formats: tiny, combined, common, dev and short
 @hapi/joi  
 joi-password-complexity
 
+**_Features_**
+log can print objects no need to use JSON.stringiy
+
 **_Future work:_**  
 use Completed, in-development to specify the status of below tasks:
 
 Completed: use winston insted of custom made logger
 
+Add mongo and redis.
 require modules only if module is required by the end-user of UBLS  
 use bluebird insted of when  
 pass log to all modules through settings, remove console.log  
