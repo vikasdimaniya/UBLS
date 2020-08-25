@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const express = require("express");
 const router = express.Router();
 
@@ -15,16 +16,15 @@ router.get("/", (req, res) => {
 //creating new user or registering
 router.post("/", (req, res) => {
   //validation for req.body.user
-  const { error } = validate(req.body.user);
+  const error = validate(_.pick(req.body.user, ["name", "email", "password"]));
   if (error) {
-    res.status(400).send(error.details[0].message);
-    return;
+    return res.status(400).send(error.details[0].message);
+  } else {
+    let user = new User(_.pick(req.body.user, ["name", "email", "password"]));
+    storage.registerUser(user);
+    //Later will send JWT insted of users object.
+    res.send(user);
   }
-  let user = new User(req.body.user);
-  storage.registerUser(user);
-  console.log("user added: ", req.body);
-  //Later will send JWT insted of users object.
-  res.send(user);
 });
 
 router.delete("/", (req, res) => {
@@ -42,7 +42,7 @@ router.delete("/", (req, res) => {
 //To edit a user
 router.put("/", (req, res) => {
   //validation for req.body.user
-  const { error } = validateUser(req.body.user);
+  const error = validateUser(req.body.user);
   if (!error) {
     res.status(400).send(error.details[0].message);
   }
