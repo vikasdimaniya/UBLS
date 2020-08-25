@@ -14,14 +14,13 @@ const app = express();
 const port = process.env.PORT || config.get("port");
 
 //CLASS DEFINATIONS
-storage.init(settings);
 if (config.get("console-silent")) {
   log.conf("Console messages are Silent");
   log.transports[2].silent = true;
 } else {
   console.log("Console messages are On");
 }
-
+storage.init(settings);
 app.listen(port, () => log.conf(`Listening on port: ${port}`));
 log.info(
   config.get("name") + " is starting in " + app.get("env") + " environment"
@@ -30,7 +29,7 @@ log.info(
 //SETTING MIDDLEWARE FOR EXPRESS
 app.use(helmet());
 app.use(express.json());
-//******************This is a Custom Middleware********************* */
+//******************This is A DEMO of Custom Middleware function********************* */
 /*
 app.use(customMiddleware);
 function customMiddleware(req, res, next) {

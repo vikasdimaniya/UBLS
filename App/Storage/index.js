@@ -1,5 +1,6 @@
 //NPM MODULES
 const mongoose = require("mongoose");
+const user = require("../storage/user");
 
 //LOCAL MODULES
 let settings;
@@ -21,12 +22,15 @@ function init(_settings) {
       useUnifiedTopology: true,
     })
     .then(() => {
-      log.info("Connection establised");
+      log.info("Database Connection establised");
       db = mongoose;
+    })
+    .then(() => {
+      user.init(db, log);
     })
     .catch((err) => {
       log.error("Database Connection Error: " + err);
     });
 }
 
-module.exports = { init: init };
+module.exports = { init: init, registerUser: user.registerUser };
