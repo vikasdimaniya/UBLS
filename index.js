@@ -4,8 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 //LOCAL MODULES
-const user = require("./App/API/user");
-const authenticate = require("./App/API/authenticate");
+const api = require("./App/API");
 const settings = require("./settings");
 const storage = require("./App/Storage");
 const config = settings.config;
@@ -21,6 +20,7 @@ if (config.get("console-silent")) {
   console.log("Console messages are On");
 }
 storage.init(settings);
+api.init(_settings);
 app.listen(port, () => log.conf(`Listening on port: ${port}`));
 log.info(
   config.get("name") + " is starting in " + app.get("env") + " environment"
@@ -47,7 +47,7 @@ if (config.get("serveStaticFiles")) app.use(express.static("public"));
 if (config.get("useMorgan")) app.use(morgan("tiny"));
 
 //API CALLS
-app.use("/api/user", user);
+app.use("/api", api);
 
 app.get("/", (req, res) => {
   res.send("Welcome to UBLS" + "try localhost:" + port + "/someValue");

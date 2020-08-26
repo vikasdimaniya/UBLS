@@ -1,33 +1,50 @@
+const bcrypt = require("bcrypt");
 const _ = require("lodash");
-const express = require("express");
-const router = express.Router();
 
 const { User, validate } = require("../models/user");
 const storage = require("../Storage");
+
+let settings;
 let users = [
   { name: "user1", password: "Qweasd1." },
   { name: "user2", password: "Qweasd1." },
 ];
 
-router.get("/", (req, res) => {
+function init(_settings) {
+  settings = _settings;
+}
+
+function getAllUsers(req, res) {
   res.send(users);
-});
+}
 
 //creating new user or registering
-router.post("/", (req, res) => {
+function registerUser(req, res) {
   //validation for req.body.user
+  //only pick the key which are acceptable. so user can't use api to save some other data.
   const error = validate(_.pick(req.body.user, ["name", "email", "password"]));
   if (error) {
-    return res.status(400).send(error.details[0].message);
+    return res.status(400).send({ error: error.details[0].message });
   } else {
     let user = new User(_.pick(req.body.user, ["name", "email", "password"]));
-    storage.registerUser(user);
+    bcrypt.genSalt(10).then((salt) => {
+      bcrypt.hash(user.password, salt).then((pass) => {
+        user.password = pass;
+        storage
+          .registerUser(user)
+          .then(() => {
+            res.send(user);
+          })
+          .catch((err) => {
+            res.status(400).send({ error: "Couldn't create User" });
+          });
+      });
+    });
     //Later will send JWT insted of users object.
-    res.send(user);
   }
-});
+}
 
-router.delete("/", (req, res) => {
+function deleteUser(req, res) {
   users.every((user, index) => {
     if (user.name === req.body.user.name) {
       users.splice(index, 1);
@@ -37,10 +54,10 @@ router.delete("/", (req, res) => {
     }
   });
   res.send(users);
-});
+}
 
 //To edit a user
-router.put("/", (req, res) => {
+function updateUser(req, res) {
   //validation for req.body.user
   const error = validateUser(req.body.user);
   if (!error) {
@@ -49,11 +66,15 @@ router.put("/", (req, res) => {
   console.log("edit added: ", req.body);
   if (user.name === req.body.user.name) {
     users.password = req.body.user.password;
-    return false;
+    res.send(users);
   } else {
-    return true;
+    res.status(400).send({ error: "Email or password is wrong" });
   }
-  res.send(users);
-});
+}
 
-module.exports = router;
+module.exports = {
+  getAllUsers: getAllUsers,
+  registerUser: registerUser,
+  deleteUser: deleteUser,
+  updateUser: updateUser,
+};

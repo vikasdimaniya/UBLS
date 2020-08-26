@@ -1,4 +1,3 @@
-const express = require("express");
 const Joi = require("@hapi/joi");
 const passwordComplexity = require("joi-password-complexity");
 const Mongoose = require("mongoose");
