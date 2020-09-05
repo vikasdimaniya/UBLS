@@ -2,16 +2,18 @@ const bcrypt = require("bcrypt");
 const _ = require("lodash");
 
 const { User, validate } = require("../models/user");
-const storage = require("../Storage");
 
 let settings;
+let storage;
+
 let users = [
   { name: "user1", password: "Qweasd1." },
   { name: "user2", password: "Qweasd1." },
 ];
 
-function init(_settings) {
+function init(_settings, _storage) {
   settings = _settings;
+  storage = _storage;
 }
 
 function getAllUsers(req, res) {
@@ -25,23 +27,24 @@ function registerUser(req, res) {
   const error = validate(_.pick(req.body.user, ["name", "email", "password"]));
   if (error) {
     return res.status(400).send({ error: error.details[0].message });
-  } else {
-    let user = new User(_.pick(req.body.user, ["name", "email", "password"]));
-    bcrypt.genSalt(10).then((salt) => {
-      bcrypt.hash(user.password, salt).then((pass) => {
-        user.password = pass;
-        storage
-          .registerUser(user)
-          .then(() => {
-            res.send(user);
-          })
-          .catch((err) => {
-            res.status(400).send({ error: "Couldn't create User" });
-          });
-      });
-    });
-    //Later will send JWT insted of users object.
   }
+  let user = new User(_.pick(req.body.user, ["name", "email", "password"]));
+  bcrypt.genSalt(10).then((salt) => {
+    bcrypt.hash(user.password, salt).then((pass) => {
+      user.password = pass;
+      storage
+        .registerUser(user)
+        .then(() => {
+          res.send(user);
+        })
+        .catch((err) => {
+          res.status(400).send({
+            error: `Couldn't create User with email ${req.body.user.email}`,
+          });
+        });
+    });
+  });
+  //Later will send JWT insted of users object.
 }
 
 function deleteUser(req, res) {
@@ -56,7 +59,7 @@ function deleteUser(req, res) {
   res.send(users);
 }
 
-//To edit a user
+//To update a user details
 function updateUser(req, res) {
   //validation for req.body.user
   const error = validateUser(req.body.user);
@@ -73,6 +76,7 @@ function updateUser(req, res) {
 }
 
 module.exports = {
+  init: init,
   getAllUsers: getAllUsers,
   registerUser: registerUser,
   deleteUser: deleteUser,

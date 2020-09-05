@@ -1,6 +1,13 @@
 const Joi = require("@hapi/joi");
 const passwordComplexity = require("joi-password-complexity");
-const Mongoose = require("mongoose");
+
+let Mongoose;
+let settings;
+
+function init(_settings, _mongoose) {
+  settings = _settings;
+  Mongoose = _mongoose;
+}
 
 //schema for user input validation
 const UserSchema = Joi.object({
@@ -46,11 +53,13 @@ const complexityOptions = {
 };
 
 function validateUser(user) {
-  let { error } = passwordComplexity(complexityOptions).validate(user.password);
+  let { error } = UserSchema.validate(user);
   if (error) {
     return error;
   } else {
-    const { error } = UserSchema.validate(user);
+    const { error } = passwordComplexity(complexityOptions).validate(
+      user.password
+    );
     if (error) {
       console.log(error);
       return error;

@@ -14,13 +14,13 @@ const port = process.env.PORT || config.get("port");
 
 //CLASS DEFINATIONS
 if (config.get("console-silent")) {
-  log.conf("Console messages are Silent");
+  log.conf("Console logs are Silent");
   log.transports[2].silent = true;
 } else {
-  console.log("Console messages are On");
+  console.log("Console logs are On");
 }
 storage.init(settings);
-api.init(_settings);
+api.init(settings, storage);
 app.listen(port, () => log.conf(`Listening on port: ${port}`));
 log.info(
   config.get("name") + " is starting in " + app.get("env") + " environment"
@@ -47,7 +47,7 @@ if (config.get("serveStaticFiles")) app.use(express.static("public"));
 if (config.get("useMorgan")) app.use(morgan("tiny"));
 
 //API CALLS
-app.use("/api", api);
+app.use("/api", api.router);
 
 app.get("/", (req, res) => {
   res.send("Welcome to UBLS" + "try localhost:" + port + "/someValue");

@@ -1,6 +1,6 @@
 //NPM MODULES
 const mongoose = require("mongoose");
-const user = require("../storage/user");
+const user = require("./user");
 
 //LOCAL MODULES
 let settings;
@@ -26,11 +26,16 @@ function init(_settings) {
       db = mongoose;
     })
     .then(() => {
-      user.init(db, log);
+      //i
+      user.init(settings, db);
     })
     .catch((err) => {
       log.error("Database Connection Error: " + err);
     });
 }
 
-module.exports = { init: init, registerUser: user.registerUser };
+module.exports = {
+  init: init,
+  registerUser: user.registerUser,
+  findUser: user.findUser,
+};
