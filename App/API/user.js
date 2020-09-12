@@ -1,8 +1,8 @@
-const bcrypt = require("bcrypt");
 const _ = require("lodash");
 
-const { User, validate } = require("../models/user");
+const validations = require("./validations");
 
+let log;
 let settings;
 let storage;
 
@@ -14,6 +14,7 @@ let users = [
 function init(_settings, _storage) {
   settings = _settings;
   storage = _storage;
+  log = settings.log;
 }
 
 function getAllUsers(req, res) {
@@ -24,26 +25,24 @@ function getAllUsers(req, res) {
 function registerUser(req, res) {
   //validation for req.body.user
   //only pick the key which are acceptable. so user can't use api to save some other data.
-  const error = validate(_.pick(req.body.user, ["name", "email", "password"]));
-  if (error) {
+  const error = validations.validate(
+    _.pick(req.body.user, ["name", "email", "password"])
+  );
+  if (error != true) {
+    log.error(error);
     return res.status(400).send({ error: error.details[0].message });
   }
-  let user = new User(_.pick(req.body.user, ["name", "email", "password"]));
-  bcrypt.genSalt(10).then((salt) => {
-    bcrypt.hash(user.password, salt).then((pass) => {
-      user.password = pass;
-      storage
-        .registerUser(user)
-        .then(() => {
-          res.send(user);
-        })
-        .catch((err) => {
-          res.status(400).send({
-            error: `Couldn't create User with email ${req.body.user.email}`,
-          });
-        });
+  storage
+    .saveUser(_.pick(req.body.user, ["name", "email", "password"]))
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      log.error("error" + err);
+      res.status(400).send({
+        error: `Couldn't create User with email ${req.body.user.email}`,
+      });
     });
-  });
   //Later will send JWT insted of users object.
 }
 

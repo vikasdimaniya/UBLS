@@ -36,6 +36,6 @@ function init(_settings) {
 
 module.exports = {
   init: init,
-  registerUser: user.registerUser,
+  saveUser: user.saveUser,
   findUser: user.findUser,
 };

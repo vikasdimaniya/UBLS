@@ -4,9 +4,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 //LOCAL MODULES
-const api = require("./App/API");
+const api = require("./App");
 const settings = require("./settings");
-const storage = require("./App/Storage");
 const config = settings.config;
 const log = settings.log;
 const app = express();
@@ -19,8 +18,7 @@ if (config.get("console-silent")) {
 } else {
   console.log("Console logs are On");
 }
-storage.init(settings);
-api.init(settings, storage);
+api.init(settings);
 app.listen(port, () => log.conf(`Listening on port: ${port}`));
 log.info(
   config.get("name") + " is starting in " + app.get("env") + " environment"
