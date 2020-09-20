@@ -1,2 +1,16 @@
 2020-09-20T15:27:30.222Z error: Caught exception: Error: listen EADDRINUSE: address already in use :::3000
 Exception origin: uncaughtException
+2020-09-20T20:46:02.450Z error: errorMongoError: E11000 duplicate key error collection: ubls.users index: email_1 dup key: { email: "a11f@gmail.com" }
+2020-09-20T20:46:02.452Z error: errorTypeError: Cannot read property '_id' of undefined
+2020-09-20T21:58:00.703Z error: "name" is required
+2020-09-20T21:59:10.104Z error: "name" is required
+2020-09-20T21:59:19.438Z error: "name" is required
+2020-09-20T22:00:19.243Z error: "name" is required
+2020-09-20T22:00:32.831Z error: "name" is required
+2020-09-20T22:01:07.277Z error: "name" is required
+2020-09-20T22:01:28.076Z error: "name" is required
+2020-09-20T22:01:50.435Z error: "name" is required
+2020-09-20T22:02:05.750Z error: "name" is required
+2020-09-20T22:02:13.882Z error: "name" is required
+2020-09-20T22:02:35.144Z error: "name" is required
+2020-09-20T22:02:52.798Z error: "name" is required

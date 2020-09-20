@@ -17,7 +17,7 @@ function init(_settings, _storage) {
 
 //user:{name:"",email="",password=""}
 router.post("/user", user.registerUser);
-router.get("/user", user.getAllUsers);
+router.get("/user", user.getUser);
 router.delete("/user", user.deleteUser);
 router.put("/user", user.updateUser);
 

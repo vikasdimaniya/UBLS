@@ -2,6 +2,12 @@ const Joi = require("@hapi/joi");
 const passwordComplexity = require("joi-password-complexity");
 
 //schema for user input validation
+const UserEmail = Joi.object({
+  email: Joi.string().min(3).max(256).required().email(),
+});
+const UserName = Joi.object({
+  name: Joi.string().min(5).max(255).required(),
+});
 const UserSchema = Joi.object({
   name: Joi.string().min(5).max(255).required(),
   email: Joi.string().min(3).max(256).required().email(),
@@ -54,7 +60,26 @@ function validateUserWoPass(user) {
   }
 }
 
+function validateUserEmail(user) {
+  let { error } = UserEmail.validate(user);
+  if (error) {
+    return error;
+  } else {
+    return true;
+  }
+}
+function validateUserName(user) {
+  let { error } = UserName.validate(user);
+  if (error) {
+    return error;
+  } else {
+    return true;
+  }
+}
+
 module.exports = {
   validate: validateUser,
   validateUserWoPass: validateUserWoPass,
+  validateUserEmail: validateUserEmail,
+  validateUserName: validateUserName,
 };

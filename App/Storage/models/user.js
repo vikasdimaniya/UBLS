@@ -1,5 +1,4 @@
-const Joi = require("@hapi/joi");
-const user = require("../user");
+const jwt = require("jsonwebtoken");
 
 let Mongoose;
 let settings;
@@ -32,6 +31,13 @@ function init(_settings, _mongoose) {
       },
     })
   );
+  User.prototype.generateAuthToken = function () {
+    const token = jwt.sign(
+      { _id: this._id, email: this.email, name: this.name },
+      settings.config.get("jwtPrivateKey")
+    );
+    return token;
+  };
 }
 
 function getUser() {

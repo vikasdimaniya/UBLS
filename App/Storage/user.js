@@ -25,7 +25,7 @@ function saveUser(user) {
         return user.save();
       })
       .then((val) => {
-        return resolve(val + user);
+        return resolve(val);
       })
       .catch((err) => {
         log.error("error" + err);

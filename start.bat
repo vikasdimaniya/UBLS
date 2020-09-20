@@ -4,4 +4,4 @@ start mongod --config DatabaseConf/mongodb.conf
 SLEEP 4
 set UBLS_jwtPrivateKey=SetNewKeyBeforeStarting
 ECHO Set Jwt Private Key: complete.
-node index.js
+node server.js

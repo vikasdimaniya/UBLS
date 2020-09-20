@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const validations = require("./validations");
 
@@ -15,30 +14,27 @@ function init(_settings, _storage) {
 
 //creating new user or registering
 function authenticateUser(req, res) {
-  //validation for req.body.user
+  //validation for req.body
   //only pick the key which are acceptable. so user can't use api to save some other data.
   const error = validations.validateUserWoPass(
-    _.pick(req.body.user, ["email", "password"])
+    _.pick(req.body, ["email", "password"])
   );
   if (error != true) {
     return res.status(400).send({ error: error.details[0].message });
   }
-  log.info("searching for user with email: " + req.body.user.email);
+  log.info("searching for user with email: " + req.body.email);
   storage
-    .findUser(req.body.user.email)
+    .findUser(req.body.email)
     .then((user) => {
       if (user != null) {
         bcrypt
-          .compare(req.body.user.password, user.password)
+          .compare(req.body.password, user.password)
           .then((validPassword) => {
             if (!validPassword) {
               res.status(400).send({ msg: "Invalid User or Password" });
             } else {
               //Autenticated
-              const token = jwt.sign(
-                { _id: user._id, email: user.email, name: user.name },
-                settings.config.get("jwtPrivateKey")
-              );
+              const token = user.generateAuthToken();
               res.send(token);
             }
           });
@@ -47,7 +43,7 @@ function authenticateUser(req, res) {
       }
     })
     .catch((err) => {
-      log.error(`Error while finding user:${req.body.user} :` + err);
+      log.error(`Error while finding user:${req.body} :` + err);
       res
         .status(400)
         .send({ msg: "Something went wrong! Probably not from your side." });
