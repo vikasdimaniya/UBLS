@@ -1,5 +1,4 @@
 node_modules/
 .vscode/
-combined.log
-error.log
+Logs/*
 DatabaseConf/db_data

@@ -16,5 +16,6 @@
     "error": true,
     "setup": true
   },
-  "databaseURI": "mongodb://localhost:27017/ubls"
+  "databaseURI": "mongodb://localhost:27017/ubls",
+  "jwtPrivateKey": "UBLSPrivateKey"
 }

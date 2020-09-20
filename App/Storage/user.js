@@ -54,7 +54,7 @@ function findUser(email) {
   return new Promise((resolve, reject) => {
     const User = UserModel.getUser();
     log.info("searching for user with email: " + email);
-    User.findOne({ email: "email" })
+    User.findOne({ email: email })
       .then((users) => {
         log.info("Search result" + users);
         return resolve(users);

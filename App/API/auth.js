@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const validations = require("./validations");
 
@@ -24,16 +26,31 @@ function authenticateUser(req, res) {
   log.info("searching for user with email: " + req.body.user.email);
   storage
     .findUser(req.body.user.email)
-    .then((result) => {
-      if (result != null) {
-        log.debug(result);
-        res.send(result);
+    .then((user) => {
+      if (user != null) {
+        bcrypt
+          .compare(req.body.user.password, user.password)
+          .then((validPassword) => {
+            if (!validPassword) {
+              res.status(400).send({ msg: "Invalid User or Password" });
+            } else {
+              //Autenticated
+              const token = jwt.sign(
+                { _id: user._id, email: user.email, name: user.name },
+                settings.config.get("jwtPrivateKey")
+              );
+              res.send(token);
+            }
+          });
       } else {
-        res.send({ msg: "No such user" });
+        res.status(400).send({ msg: "Invalid User or Password" });
       }
     })
     .catch((err) => {
       log.error(`Error while finding user:${req.body.user} :` + err);
+      res
+        .status(400)
+        .send({ msg: "Something went wrong! Probably not from your side." });
     });
 }
 module.exports = { init: init, authenticateUser: authenticateUser };

@@ -11,6 +11,11 @@ const log = settings.log;
 const app = express();
 const port = process.env.PORT || config.get("port");
 
+if (!config.get("jwtPrivateKey")) {
+  log.fatal("jwt Private Key not configured in config");
+  process.exit(1);
+}
+
 //CLASS DEFINATIONS
 if (config.get("console-silent")) {
   log.conf("Console logs are Silent");

@@ -2,7 +2,7 @@ const { createLogger, format, transports } = require("winston");
 const { combine, timestamp, printf } = format;
 const LevelData = {
   levels: {
-    emerg: 0,
+    fatal: 0,
     alert: 1,
     crit: 2,
     error: 3,
@@ -13,7 +13,7 @@ const LevelData = {
     debug: 8,
   },
   colors: {
-    emerg: "red",
+    fatal: "red",
     alert: "white",
     crit: "green",
     error: "yellow",
@@ -33,14 +33,19 @@ const myFormat = printf(({ level, message, timestamp }) => {
 
 class Logger {
   constructor(config) {
-    console.log(config.get("seprateErrorLog"));
-    console.log(config.get("log-file-path"));
+    if (config.get("seprateErrorLog"))
+      console.log(
+        "Save error logs separately also. To disable set seprateErrorLog: false inside config"
+      );
+
+    if (!config.get("log-file-path")) console.log("Save logs in : Logs/");
+    else console.log("Save logs in :" + config.get("log-file-path"));
     let transportArray = [];
     if (config.get("seprateErrorLog")) {
       transportArray = [
         //
         // - Write all logs with level `error` and below to `error.log`
-        // - Write all logs with level `emerg` and below to `combined.log`
+        // - Write all logs with level `fatal` and below to `combined.log`
         //
         new transports.File({
           filename: config.get("log-file-path") + "error.log",
@@ -52,7 +57,7 @@ class Logger {
       ];
     } else {
       transportArray = [
-        // - Write all logs with level `emerg` and below to `combined.log`
+        // - Write all logs with level `fatal` and below to `combined.log`
         new transports.File({
           filename: config.get("log-file-path") + "combined.log",
         }),

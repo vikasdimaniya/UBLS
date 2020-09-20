@@ -1,0 +1,2 @@
+2020-09-20T15:27:30.222Z error: Caught exception: Error: listen EADDRINUSE: address already in use :::3000
+Exception origin: uncaughtException

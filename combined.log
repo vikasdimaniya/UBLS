@@ -1,0 +1,31 @@
+2020-09-20T15:27:30.151Z info: mongodb://localhost:27017/ubls
+2020-09-20T15:27:30.196Z info: UBLS-development is starting in development environment
+2020-09-20T15:27:30.215Z conf: Extended url encoding enabled
+2020-09-20T15:27:30.222Z error: Caught exception: Error: listen EADDRINUSE: address already in use :::3000
+Exception origin: uncaughtException
+2020-09-20T15:27:30.284Z info: Database Connection establised
+2020-09-20T15:27:48.842Z info: mongodb://localhost:27017/ubls
+2020-09-20T15:27:48.871Z info: UBLS-development is starting in development environment
+2020-09-20T15:27:48.885Z conf: Extended url encoding enabled
+2020-09-20T15:27:48.895Z conf: Listening on port: 3000
+2020-09-20T15:27:48.920Z info: Database Connection establised
+2020-09-20T15:31:17.115Z info: mongodb://localhost:27017/ubls
+2020-09-20T15:31:17.152Z info: UBLS-development is starting in development environment
+2020-09-20T15:31:17.156Z conf: Extended url encoding enabled
+2020-09-20T15:31:17.162Z conf: Listening on port: 3000
+2020-09-20T15:31:17.207Z info: Database Connection establised
+2020-09-20T15:33:11.983Z info: mongodb://localhost:27017/ubls
+2020-09-20T15:33:12.032Z info: UBLS-development is starting in development environment
+2020-09-20T15:33:12.039Z conf: Extended url encoding enabled
+2020-09-20T15:33:12.046Z conf: Listening on port: 3000
+2020-09-20T15:33:12.078Z info: Database Connection establised
+2020-09-20T15:34:39.737Z info: mongodb://localhost:27017/ubls
+2020-09-20T15:34:39.761Z info: UBLS-development is starting in development environment
+2020-09-20T15:34:39.776Z conf: Extended url encoding enabled
+2020-09-20T15:34:39.789Z conf: Listening on port: 3000
+2020-09-20T15:34:39.830Z info: Database Connection establised
+2020-09-20T15:35:57.486Z info: mongodb://localhost:27017/ubls
+2020-09-20T15:35:57.510Z info: UBLS-development is starting in development environment
+2020-09-20T15:35:57.553Z conf: Extended url encoding enabled
+2020-09-20T15:35:57.612Z conf: Listening on port: 3000
+2020-09-20T15:35:57.661Z info: Database Connection establised
