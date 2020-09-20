@@ -4,6 +4,7 @@ const router = express.Router();
 
 const auth = require("./auth");
 const user = require("./user");
+const middleware = require("./middleware/auth");
 
 let storage;
 let settings;
@@ -13,11 +14,12 @@ function init(_settings, _storage) {
   storage = _storage;
   user.init(settings, _storage);
   auth.init(settings, _storage);
+  middleware.init(settings);
 }
 
 //user:{name:"",email="",password=""}
 router.post("/user", user.registerUser);
-router.get("/user", user.getUser);
+router.get("/user", middleware.authorizeUser, user.getUser);
 router.delete("/user", user.deleteUser);
 router.put("/user", user.updateUser);
 

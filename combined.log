@@ -212,3 +212,88 @@ Exception origin: uncaughtException
   password: '$2b$10$UUKFxwR8CA6GfYuJi7SEg.W7Iig9ro6va6aqa5j2asFVWIrmr8TF2',
   __v: 0
 }
+2020-09-20T22:11:58.906Z info: mongodb://localhost:27017/ubls
+2020-09-20T22:11:58.956Z info: UBLS-development is starting in development environment
+2020-09-20T22:11:58.972Z conf: Extended url encoding enabled
+2020-09-20T22:11:58.980Z conf: Listening on port: 3000
+2020-09-20T22:11:59.043Z info: Database Connection establised
+2020-09-20T22:14:36.141Z info: searching for user with email: a111f@gmail.com
+2020-09-20T22:14:36.142Z info: searching for user with email: a111f@gmail.com
+2020-09-20T22:14:36.239Z info: Search result{
+  _id: 5f67bfa404bebe867449da58,
+  name: 'user1',
+  email: 'a111f@gmail.com',
+  password: '$2b$10$fCxH/boDfsShGVDKr08Fz.4G7RkxcZAlIOmRGGcBPgGURZRL8luZC',
+  __v: 0
+}
+2020-09-20T22:15:48.162Z info: mongodb://localhost:27017/ubls
+2020-09-20T22:15:48.273Z info: UBLS-development is starting in development environment
+2020-09-20T22:15:48.399Z conf: Extended url encoding enabled
+2020-09-20T22:15:48.453Z conf: Listening on port: 3000
+2020-09-20T22:15:48.627Z info: Database Connection establised
+2020-09-20T22:16:02.191Z info: mongodb://localhost:27017/ubls
+2020-09-20T22:16:02.236Z info: UBLS-development is starting in development environment
+2020-09-20T22:16:02.267Z conf: Extended url encoding enabled
+2020-09-20T22:16:02.344Z conf: Listening on port: 3000
+2020-09-20T22:16:02.452Z info: Database Connection establised
+2020-09-20T22:16:40.972Z info: mongodb://localhost:27017/ubls
+2020-09-20T22:16:41.090Z info: UBLS-development is starting in development environment
+2020-09-20T22:16:41.154Z conf: Extended url encoding enabled
+2020-09-20T22:16:41.163Z conf: Listening on port: 3000
+2020-09-20T22:16:41.252Z info: Database Connection establised
+2020-09-20T22:16:48.084Z info: mongodb://localhost:27017/ubls
+2020-09-20T22:16:48.155Z info: UBLS-development is starting in development environment
+2020-09-20T22:16:48.164Z conf: Extended url encoding enabled
+2020-09-20T22:16:48.178Z conf: Listening on port: 3000
+2020-09-20T22:16:48.235Z info: Database Connection establised
+2020-09-20T22:16:50.899Z info: mongodb://localhost:27017/ubls
+2020-09-20T22:16:50.947Z info: UBLS-development is starting in development environment
+2020-09-20T22:16:50.951Z conf: Extended url encoding enabled
+2020-09-20T22:16:50.960Z conf: Listening on port: 3000
+2020-09-20T22:16:51.015Z info: Database Connection establised
+2020-09-20T22:16:58.825Z info: mongodb://localhost:27017/ubls
+2020-09-20T22:16:58.875Z info: UBLS-development is starting in development environment
+2020-09-20T22:16:58.878Z conf: Extended url encoding enabled
+2020-09-20T22:16:58.883Z conf: Listening on port: 3000
+2020-09-20T22:16:58.916Z info: Database Connection establised
+2020-09-20T22:19:21.381Z info: mongodb://localhost:27017/ubls
+2020-09-20T22:19:21.465Z info: UBLS-development is starting in development environment
+2020-09-20T22:19:21.533Z conf: Extended url encoding enabled
+2020-09-20T22:19:21.577Z conf: Listening on port: 3000
+2020-09-20T22:19:21.669Z info: Database Connection establised
+2020-09-20T22:19:26.264Z info: vikas4@gmail.com wjat
+2020-09-20T22:19:26.272Z info: searching for user with email: vikas4@gmail.com
+2020-09-20T22:19:26.316Z info: Search result{
+  _id: 5f67d0a6fbd97f852c0fc6db,
+  name: 'user1',
+  email: 'vikas4@gmail.com',
+  password: '$2b$10$UUKFxwR8CA6GfYuJi7SEg.W7Iig9ro6va6aqa5j2asFVWIrmr8TF2',
+  __v: 0
+}
+2020-09-20T22:19:31.277Z info: searching for user with email: a111f@gmail.com
+2020-09-20T22:19:31.322Z info: searching for user with email: a111f@gmail.com
+2020-09-20T22:19:31.376Z info: Search result{
+  _id: 5f67bfa404bebe867449da58,
+  name: 'user1',
+  email: 'a111f@gmail.com',
+  password: '$2b$10$fCxH/boDfsShGVDKr08Fz.4G7RkxcZAlIOmRGGcBPgGURZRL8luZC',
+  __v: 0
+}
+2020-09-20T22:19:49.411Z info: vikas4@gmail.com wjat
+2020-09-20T22:19:49.413Z info: searching for user with email: vikas4@gmail.com
+2020-09-20T22:19:49.420Z info: Search result{
+  _id: 5f67d0a6fbd97f852c0fc6db,
+  name: 'user1',
+  email: 'vikas4@gmail.com',
+  password: '$2b$10$UUKFxwR8CA6GfYuJi7SEg.W7Iig9ro6va6aqa5j2asFVWIrmr8TF2',
+  __v: 0
+}
+2020-09-20T22:20:00.438Z info: vikas3@gmail.com wjat
+2020-09-20T22:20:00.467Z info: searching for user with email: vikas3@gmail.com
+2020-09-20T22:20:00.472Z info: Search result{
+  _id: 5f67ccf5e5bdc39544886874,
+  name: 'user1',
+  email: 'vikas3@gmail.com',
+  password: '$2b$10$8KuC0n.1V3iNSYq8787HHuqYOZwkijQw2mLbiE.pBIf/Qwal/94C.',
+  __v: 0
+}
