@@ -17,8 +17,8 @@ function init(_settings, _storage) {
   log = settings.log;
 }
 
-function getUser(req, res) {
-  log.info(req.body.email + " wjat");
+function getUser(req, res, next) {
+  log.info(req.body.email);
   const error = validations.validateUserEmail(_.pick(req.body, ["email"]));
   if (error != true) {
     log.error(error);
@@ -34,7 +34,7 @@ function getUser(req, res) {
       }
     })
     .catch((err) => {
-      log.err(err);
+      next(err);
     });
 }
 
@@ -43,7 +43,7 @@ function getUser(req, res) {
  * req.body should contain name, email and password
  * res will contain only name and email and header will have jwt token "x-auth-token"
  */
-function registerUser(req, res) {
+function registerUser(req, res, next) {
   //validation for req.body
   //only pick the key which are acceptable. so user can't use api to save some other data.
   const error = validations.validate(
@@ -63,39 +63,44 @@ function registerUser(req, res) {
       res.header("x-auth-token", token).send(_.pick(user, ["name", "email"]));
     })
     .catch((err) => {
-      log.error("error" + err);
-      res.status(400).send({
-        error: `Couldn't create User with email ${req.body.email}`,
-      });
+      next(err);
     });
   //Later will send JWT insted of users object.
 }
 
-function deleteUser(req, res) {
-  users.every((user, index) => {
-    if (user.name === req.body.name) {
-      users.splice(index, 1);
-      return false;
-    } else {
-      return true;
-    }
-  });
-  res.send(users);
+function deleteUser(req, res, next) {
+  try {
+    users.every((user, index) => {
+      if (user.name === req.body.name) {
+        users.splice(index, 1);
+        return false;
+      } else {
+        return true;
+      }
+    });
+    res.send(users);
+  } catch (err) {
+    next(err);
+  }
 }
 
 //To update a user details
-function updateUser(req, res) {
+function updateUser(req, res, next) {
   //validation for req.body
-  const error = validateUser(req.body);
-  if (!error) {
-    res.status(400).send(error.details[0].message);
-  }
-  console.log("edit added: ", req.body);
-  if (user.name === req.body.name) {
-    users.password = req.body.password;
-    res.send(users);
-  } else {
-    res.status(400).send({ error: "Email or password is wrong" });
+  try {
+    const error = validateUser(req.body);
+    if (!error) {
+      res.status(400).send(error.details[0].message);
+    }
+    console.log("edit added: ", req.body);
+    if (user.name === req.body.name) {
+      users.password = req.body.password;
+      res.send(users);
+    } else {
+      res.status(400).send({ error: "Email or password is wrong" });
+    }
+  } catch (err) {
+    next(err);
   }
 }
 

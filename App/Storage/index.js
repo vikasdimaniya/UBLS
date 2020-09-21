@@ -31,6 +31,8 @@ function init(_settings) {
     })
     .catch((err) => {
       log.error("Database Connection Error: " + err);
+      log.info("Exiting application....");
+      process.exit(1);
     });
 }
 

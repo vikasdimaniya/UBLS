@@ -48,18 +48,18 @@ class Logger {
         // - Write all logs with level `fatal` and below to `combined.log`
         //
         new transports.File({
-          filename: config.get("log-file-path") + "error.log",
+          filename: config.get("log-file-path") + "Logs/error.log",
           level: "error",
         }),
         new transports.File({
-          filename: config.get("log-file-path") + "combined.log",
+          filename: config.get("log-file-path") + "Logs/combined.log",
         }),
       ];
     } else {
       transportArray = [
         // - Write all logs with level `fatal` and below to `combined.log`
         new transports.File({
-          filename: config.get("log-file-path") + "combined.log",
+          filename: config.get("log-file-path") + "Logs/combined.log",
         }),
       ];
     }

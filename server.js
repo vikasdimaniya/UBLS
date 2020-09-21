@@ -13,6 +13,7 @@ const port = process.env.PORT || config.get("port");
 
 if (!config.get("jwtPrivateKey")) {
   log.fatal("jwt Private Key not configured in config");
+  log.info("Exiting application....");
   process.exit(1);
 }
 
@@ -52,35 +53,57 @@ if (config.get("useMorgan")) app.use(morgan("tiny"));
 //API CALLS
 app.use("/api", api.router);
 
-app.get("/", (req, res) => {
-  res.send("Welcome to UBLS" + "try localhost:" + port + "/someValue");
+app.get("/", (req, res, next) => {
+  try {
+    res.send("Welcome to UBLS" + "try localhost:" + port + "/someValue");
+  } catch (err) {
+    next(err);
+  }
 });
 
-app.get("/:val", (req, res) => {
-  res.send(
-    "Good: " +
-      req.params.val +
-      " Now try: localhost:" +
-      port +
-      "/someValue/someOtherValue"
-  );
+app.get("/:val", (req, res, next) => {
+  try {
+    res.send(
+      "Good: " +
+        req.params.val +
+        " Now try: localhost:" +
+        port +
+        "/someValue/someOtherValue"
+    );
+  } catch (err) {
+    next(err);
+  }
 });
 
-app.get("/:val/:val2", (req, res) => {
-  res.send(
-    "Good: " +
-      "value 1: " +
-      req.params.val +
-      " value 2: " +
-      req.params.val2 +
-      " Now try: localhost:" +
-      "Query" +
-      req.query +
-      port +
-      "/someValue/someOtherValue?sortBy=name"
-  );
+app.get("/:val/:val2", (req, res, next) => {
+  try {
+    res.send(
+      "Good: " +
+        "value 1: " +
+        req.params.val +
+        " value 2: " +
+        req.params.val2 +
+        " Now try: localhost:" +
+        "Query" +
+        req.query +
+        port +
+        "/someValue/someOtherValue?sortBy=name"
+    );
+  } catch (err) {
+    next(err);
+  }
 });
-
+app.use((err, req, res, next) => {
+  log.error(err);
+  res.status(500).send("Internal error. Try again after sometime");
+});
 process.on("uncaughtException", (err, origin) => {
   log.error(`Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+  process.exit(1);
+});
+process.on("unhandledRejection", (err, origin) => {
+  log.error(
+    `Caught unhandled Rejection: ${err}\n` + `Exception origin: ${origin}`
+  );
+  process.exit(1);
 });
