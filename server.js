@@ -2,6 +2,7 @@
 const express = require("express");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const compression = require("compression");
 
 //LOCAL MODULES
 const api = require("./App");
@@ -31,7 +32,10 @@ log.info(
 );
 
 //SETTING MIDDLEWARE FOR EXPRESS
-app.use(helmet());
+if(config.get("EnableSecurityInDev") === true && app.get("env")=="production"){
+  app.use(helmet());
+  app.use(compression());
+}
 app.use(express.json());
 //******************This is A DEMO of Custom Middleware function********************* */
 /*

@@ -7,6 +7,7 @@
   "useHelmet": true,
   "useMorgan": true,
   "useMorganFormats": "tiny",
+  "EnableSecurityInDev":false,
   "console-silent": false,
   "log-in-file": false,
   "log-file-path": "",
