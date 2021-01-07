@@ -20,6 +20,8 @@ function init(_settings) {
     .connect(config.databaseURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      ssl: true,
+      sslValidate: false
     })
     .then(() => {
       log.info("Database Connection establised");

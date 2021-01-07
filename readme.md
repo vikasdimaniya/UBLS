@@ -34,6 +34,8 @@ use Completed, in-development to specify the status of below tasks:
 Completed: use winston insted of custom made logger
 
 Add mongo and redis.
+Add ssl and tls for mongodb.
+Add option to show logs like in electron-builder SET DEBUG=electron-builder, i.e use SET DEBUG=APPLICATION_NAME   
 require modules only if module is required by the end-user of UBLS  
 use bluebird insted of when  
 if port already in use then exit  

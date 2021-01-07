@@ -2,3 +2,4 @@ node_modules/
 .vscode/
 Logs/*
 DatabaseConf/db_data
+DatabaseConf/replica/log
