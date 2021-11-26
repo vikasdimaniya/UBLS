@@ -16,6 +16,7 @@ function init(_settings, _storage) {
   auth.init(settings, _storage);
   middleware.init(settings, _storage);
 }
+//TODO: add express validator to validate every api request for correct values and types
 
 //user:{name:"",email="",password=""}
 router.post("/user", user.registerUser);
@@ -24,6 +25,6 @@ router.delete("/user", user.deleteUser);
 router.put("/user", user.updateUser);
 
 //user:{email="",password=""}
-router.post("/auth", auth.authenticateUser);
+router.post("/auth/local", auth.authenticateUser);
 
 module.exports = { init: init, router: router };

@@ -1,10 +1,14 @@
 //NPM MODULES
-const express = require("express");
+const bodyParser = require("body-parser");
 const compression = require("compression");
 const cookieParser = require('cookie-parser');
-const bodyParser = require("body-parser");
+const express = require("express");
+const googleAuth = require('./App/API/googleAuth');
 const helmet = require("helmet");
 const morgan = require("morgan");
+const session = require('express-session');
+const passport = require('passport');
+
 
 //LOCAL MODULES
 const api = require("./App");
@@ -13,6 +17,20 @@ const config = settings.config;
 const log = settings.log;
 const app = express();
 const port = process.env.PORT || config.get("port");
+
+function isLoggedIn(req, res, next) {
+  req.user ? next() : res.sendStatus(401);
+}
+if(process.env.SESSION_SECRET === undefined) {
+  log.fatal("SESSION_SECRET missing from env, exiting with code 1.");
+  process.exit(1);
+}
+
+//PASSPORT
+googleAuth.init(settings);
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 if (!config.get("jwtPrivateKey")) {
   log.fatal("jwt Private Key not configured in config");
@@ -64,10 +82,35 @@ app.use("/api", api.router);
 
 app.get("/", (req, res, next) => {
   try {
-    res.send("Welcome to UBLS" + "try localhost:" + port + "/someValue");
+    res.send("<p>Welcome to UBLS" + "try localhost:" + port + "</p>"
+      +'<a href="/auth/google">Authenticate with Google</a>'
+    );
   } catch (err) {
     next(err);
   }
+});
+app.get('/auth/google',
+  passport.authenticate('google', { scope: [ 'email', 'profile' ] }
+));
+app.get( '/auth/google/callback',
+  passport.authenticate( 'google', {
+    successRedirect: '/protected',
+    failureRedirect: '/auth/google/failure'
+  })
+);
+
+app.get('/protected', isLoggedIn, (req, res) => {
+  res.send(`Hello ${req.user.displayName}`);
+});
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send('Goodbye!');
+});
+
+app.get('/auth/google/failure', (req, res) => {
+  res.send('Failed to authenticate..');
 });
 
 app.get("/:val", (req, res, next) => {
