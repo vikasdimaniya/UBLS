@@ -55,9 +55,9 @@ function findUser(email) {
     const User = UserModel.getUser();
     log.info("searching for user with email: " + email);
     User.findOne({ email: email })
-      .then((users) => {
-        log.info("Search result" + users);
-        return resolve(users);
+      .then((user) => {
+        log.info("Search result" + user);
+        return resolve(user);
       })
       .catch((err) => {
         log.error(`Mongo: Error while serching for user email: ${email}`);

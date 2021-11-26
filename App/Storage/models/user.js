@@ -31,6 +31,7 @@ function init(_settings, _mongoose) {
       },
     })
   );
+  //TODO: store JWTs inside an httpOnly cookie
   User.prototype.generateAuthToken = function () {
     const token = jwt.sign(
       { _id: this._id, email: this.email, name: this.name },

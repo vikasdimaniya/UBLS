@@ -1,8 +1,10 @@
 //NPM MODULES
 const express = require("express");
+const compression = require("compression");
+const cookieParser = require('cookie-parser');
+const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const compression = require("compression");
 
 //LOCAL MODULES
 const api = require("./App");
@@ -32,6 +34,9 @@ log.info(
 );
 
 //SETTING MIDDLEWARE FOR EXPRESS
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 if(config.get("EnableSecurityInDev") === true && app.get("env")=="production"){
   app.use(helmet());
   app.use(compression());
@@ -92,6 +97,16 @@ app.get("/:val/:val2", (req, res, next) => {
         req.query +
         port +
         "/someValue/someOtherValue?sortBy=name"
+    );
+  } catch (err) {
+    next(err);
+  }
+});
+app.post("/abc", (req, res, next) => {
+  try {
+    console.log("Good:",req.body())
+    res.send(
+      "Good:"+req.body
     );
   } catch (err) {
     next(err);

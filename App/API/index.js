@@ -14,7 +14,7 @@ function init(_settings, _storage) {
   storage = _storage;
   user.init(settings, _storage);
   auth.init(settings, _storage);
-  middleware.init(settings);
+  middleware.init(settings, _storage);
 }
 
 //user:{name:"",email="",password=""}

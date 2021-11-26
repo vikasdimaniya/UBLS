@@ -20,7 +20,7 @@ function init(_settings) {
     .connect(config.databaseURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      ssl: true,
+      ssl: false,
       sslValidate: false
     })
     .then(() => {
@@ -32,7 +32,8 @@ function init(_settings) {
       user.init(settings, db);
     })
     .catch((err) => {
-      log.error("Database Connection Error: " + err);
+      log.error("Database Connection Error: ");
+      log.error(err);
       log.info("Exiting application....");
       process.exit(1);
     });

@@ -5,6 +5,9 @@ openssl req -new -key key.pem -out csr.pem
 openssl x509 -req -days 1000 -in csr.pem -signkey key.pem -out cert.pem
 cat cert.pem key.pem > mongodb.pem
 
+for creating security key file for replias set internal security verify each other. every node should have keyFile.
+openssl rand -base64 756 > replica_auth.key
+
 mongod --dbpath D:/Documents/Study/Project/UBLS/DatabaseConf/db_data/data2  --tlsMode requireTLS --tlsCertificateKeyFile D:\Documents\Study\Project\UBLS\DatabaseConf\SSL_TLS\mongodb.pem
 mongo --tls --tlsAllowInvalidCertificates --host localhost --tlsCAFile D:\Documents\Study\Project\UBLS\DatabaseConf\SSL_TLS\revoke.pem
 

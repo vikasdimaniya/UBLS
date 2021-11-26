@@ -3,3 +3,6 @@ node_modules/
 Logs/*
 DatabaseConf/db_data
 DatabaseConf/replica/log
+DatabaseConf/replica/replica1_data/*
+DatabaseConf/replica/replica2_data/*
+DatabaseConf/replica/replica3_data/*
