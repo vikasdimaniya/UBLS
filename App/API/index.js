@@ -2,29 +2,27 @@ const express = require("express");
 const _ = require("lodash");
 const router = express.Router();
 
-const auth = require("./auth");
-const user = require("./user");
-const middleware = require("./middleware/auth");
+const middleware = require("./middleware");
+const public = require("./public");
+const private = require("./private");
 
 let storage;
 let settings;
+let log;
 
-function init(_settings, _storage) {
-  settings = _settings;
-  storage = _storage;
-  user.init(settings, _storage);
-  auth.init(settings, _storage);
-  middleware.init(settings, _storage);
+function init(core) {
+  settings = core.settings;
+  storage = core.storage;
+  log = core.log;
+  middleware.init(core);
+  
+  //TODO: add express validator to validate every api request for correct values and types
+  
+  //all public routes
+  router.use("/", public.router);
+
+  //all private routes
+  router.use("/", middleware.auth.authorizeUser, private.router);
 }
-//TODO: add express validator to validate every api request for correct values and types
-
-//user:{name:"",email="",password=""}
-router.post("/user", user.registerUser);
-router.get("/user", middleware.authorizeUser, user.getUser);
-router.delete("/user", user.deleteUser);
-router.put("/user", user.updateUser);
-
-//user:{email="",password=""}
-router.post("/auth/local", auth.authenticateUser);
 
 module.exports = { init: init, router: router };

@@ -4,10 +4,11 @@ const Promise = require("bluebird");
 let db;
 let log;
 let settings;
+
 const UserModel = require("./models/user");
-function init(_settings, _db) {
-  settings = _settings;
-  log = _settings.log;
+function init(core, _db) {
+  settings = core.settings;
+  log = core.log;
   db = _db;
   UserModel.init(settings, db);
 }

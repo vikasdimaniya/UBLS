@@ -11,10 +11,10 @@ let users = [
   { name: "user2", password: "Qweasd1." },
 ];
 
-function init(_settings, _storage) {
-  settings = _settings;
-  storage = _storage;
-  log = settings.log;
+function init(core) {
+  settings = core.settings;
+  storage = core.storage;
+  log =  core.log;
 }
 //modify this function to find details of some specific user based on some property like email
 //currently it simply return the current user details

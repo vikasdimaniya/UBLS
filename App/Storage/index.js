@@ -11,10 +11,10 @@ let db;
 //LOCAL FUNCTIONS
 
 //EXPORTED FUNCTIONS
-function init(_settings) {
-  settings = _settings;
-  log = _settings.log;
-  config = _settings.config;
+function init(core) {
+  settings = core.settings;
+  log = core.log;
+  config = core.config;
   log.info(config.databaseURI);
   mongoose
     .connect(config.databaseURI, {
@@ -29,7 +29,7 @@ function init(_settings) {
     })
     .then(() => {
       //i
-      user.init(settings, db);
+      user.init(core, db);
     })
     .catch((err) => {
       log.error("Database Connection Error: ");

@@ -3,31 +3,35 @@ const bodyParser = require("body-parser");
 const compression = require("compression");
 const cookieParser = require('cookie-parser');
 const express = require("express");
-const googleAuth = require('./App/API/googleAuth');
+const googleAuth = require('./App/Runtime/auth/googleAuth');
 const helmet = require("helmet");
 const morgan = require("morgan");
 const session = require('express-session');
 const passport = require('passport');
+const Logger = require("./log");
+const config = require("config");
 
+let logger = new Logger(config);
+let log = logger.getLogger();
+
+let core={}
+core.config = config;
+core.log = log;
 
 //LOCAL MODULES
 const api = require("./App");
-const settings = require("./settings");
-const config = settings.config;
-const log = settings.log;
 const app = express();
 const port = process.env.PORT || config.get("port");
 
-function isLoggedIn(req, res, next) {
-  req.user ? next() : res.sendStatus(401);
-}
+
 if(process.env.SESSION_SECRET === undefined) {
   log.fatal("SESSION_SECRET missing from env, exiting with code 1.");
   process.exit(1);
 }
 
 //PASSPORT
-googleAuth.init(settings);
+googleAuth.init(core);
+//TODO: using redis for session storage
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -45,7 +49,7 @@ if (config.get("console-silent")) {
 } else {
   console.log("Console logs are On");
 }
-api.init(settings);
+api.init(core);
 app.listen(port, () => log.conf(`Listening on port: ${port}`));
 log.info(
   config.get("name") + " is starting in " + app.get("env") + " environment"
@@ -82,9 +86,7 @@ app.use("/api", api.router);
 
 app.get("/", (req, res, next) => {
   try {
-    res.send("<p>Welcome to UBLS" + "try localhost:" + port + "</p>"
-      +'<a href="/auth/google">Authenticate with Google</a>'
-    );
+    res.redirect("/index.html")
   } catch (err) {
     next(err);
   }
@@ -92,77 +94,35 @@ app.get("/", (req, res, next) => {
 app.get('/auth/google',
   passport.authenticate('google', { scope: [ 'email', 'profile' ] }
 ));
-app.get( '/auth/google/callback',
+app.get('/auth/google/callback',
   passport.authenticate( 'google', {
-    successRedirect: '/protected',
+    successRedirect: '/home',
     failureRedirect: '/auth/google/failure'
   })
 );
 
-app.get('/protected', isLoggedIn, (req, res) => {
-  res.send(`Hello ${req.user.displayName}`);
-});
+
 
 app.get('/logout', (req, res) => {
   req.logout();
   req.session.destroy();
-  res.send('Goodbye!');
+  res.redirect("/index.html");
 });
 
 app.get('/auth/google/failure', (req, res) => {
   res.send('Failed to authenticate..');
 });
 
-app.get("/:val", (req, res, next) => {
-  try {
-    res.send(
-      "Good: " +
-        req.params.val +
-        " Now try: localhost:" +
-        port +
-        "/someValue/someOtherValue"
-    );
-  } catch (err) {
-    next(err);
-  }
-});
-
-app.get("/:val/:val2", (req, res, next) => {
-  try {
-    res.send(
-      "Good: " +
-        "value 1: " +
-        req.params.val +
-        " value 2: " +
-        req.params.val2 +
-        " Now try: localhost:" +
-        "Query" +
-        req.query +
-        port +
-        "/someValue/someOtherValue?sortBy=name"
-    );
-  } catch (err) {
-    next(err);
-  }
-});
-app.post("/abc", (req, res, next) => {
-  try {
-    console.log("Good:",req.body())
-    res.send(
-      "Good:"+req.body
-    );
-  } catch (err) {
-    next(err);
-  }
-});
 app.use((err, req, res, next) => {
   log.error(err);
-  res.status(500).send("Internal error. Try again after sometime");
+  res.status(500).send("Internal error. Try again after sometime.");
 });
+
 process.on("uncaughtException", (err, origin) => {
   log.error(`Caught exception: ${err}\n` + `Exception origin: ${origin}`);
   process.exit(1);
 });
+
 process.on("unhandledRejection", (err, origin) => {
   log.error(
     `Caught unhandled Rejection: ${err}\n` + `Exception origin: ${origin}`

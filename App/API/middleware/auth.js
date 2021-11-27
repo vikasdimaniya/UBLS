@@ -1,12 +1,15 @@
 const jwt = require("jsonwebtoken");
+
 let settings;
 let storage;
 let log;
-function init(_settings, _storage) {
-  settings = _settings;
-  storage = _storage;
-  log = settings.log;
+
+function init(core) {
+  settings = core.settings;
+  storage = core.storage;
+  log = core.log;
 }
+
 function authorizeUser(req, res, next) {
   const token = req.header("x-auth-token");
   if (!token) return res.status(401).send("Access denied. No token provided.");
@@ -27,7 +30,13 @@ function authorizeUser(req, res, next) {
     log.error(err);
   }
 }
+
+function isLoggedIn(req, res, next) {
+  req.user ? next() : res.sendStatus(401);
+}
+
 module.exports = {
   init: init,
   authorizeUser: authorizeUser,
+  isLoggedIn: isLoggedIn
 };
