@@ -35,17 +35,21 @@ use Completed, in-development to specify the status of below tasks:
 
 Completed: use winston insted of custom made logger
 
-Add mongo and redis.
-Add ssl and tls for mongodb.
-Add option to show logs like in electron-builder SET DEBUG=electron-builder, i.e use SET DEBUG=APPLICATION_NAME   
+
+add nginx to serve static files  
+use docker
+use ESLint
+use node clusters https://nodejs.org/api/cluster.html  
+Add redis.
+https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/projectstructre/breakintcomponents.md vs current?  
+https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/projectstructre/separateexpress.md
+Use PINO ? vs winston  
+Improve error handling, https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/errorhandling/centralizedhandling.md  
 require modules only if module is required by the end-user of UBLS  
-use bluebird insted of when  
 if port already in use then exit  
-pass log to all modules through settings, remove console.log  
 add limit to api call size express.use(body.parser({limit:1mb}))  
 add log file and different options like to store in a single file or create new file every day  
 add JWT and intigrate other authentication systems and give option to select between these systems or select multiple at a time.  
-add ui for setting the UBLS and create settings files for both environments.
 
 **_Code formats:_**
 Each module should be required alphabetically.
