@@ -10,7 +10,6 @@ function init(core) {
     log = core.log;
     
     //user:{name:"",email="",password=""}
-    router.use("/signup", runtime.singup);
-    router.use("/login", runtime.login);
+
 }
 module.exports = { init: init, router: router };

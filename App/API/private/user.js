@@ -9,12 +9,8 @@ function init(core) {
     runtime = core.runtime;
     log = core.log;
     
-    router.get("/", user.getUser);
-    router.delete("/", user.deleteUser);
-    router.put("/", user.updateUser);
-    router.get('/home', isLoggedIn, (req, res) => {
-        res.redirect("/home.html")
-        //res.send(`Home page ${req.user.displayName}`);
-    });
+    router.get("/", runtime.user.getUser);
+    router.delete("/", runtime.user.deleteUser);
+    router.put("/", runtime.user.updateUser);
 }
 module.exports = { init: init, router: router };

@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const validations = require("./validations");
 
 let log;
-let settings;
+
 let storage;
 
 let users = [
@@ -12,14 +12,13 @@ let users = [
 ];
 
 function init(core) {
-  settings = core.settings;
+  
   storage = core.storage;
   log =  core.log;
 }
 //modify this function to find details of some specific user based on some property like email
 //currently it simply return the current user details
 function getUser(req, res, next) {
-  log.info(req.body.email);
   const error = validations.validateUserEmail(_.pick(req.user, ["email"]));
   if (error != true) {
     log.error(error);
@@ -44,31 +43,7 @@ function getUser(req, res, next) {
  * req.body should contain name, email and password
  * res will contain only name and email and header will have jwt token "x-auth-token"
  */
-function registerUser(req, res, next) {
-  //validation for req.body
-  //only pick the key which are acceptable. so user can't use api to save some other data.
-  const error = validations.validate(
-    _.pick(req.body.user, ["name", "email", "password"])
-  );
-  if (error != true) {
-    log.error(error);
-    return res.status(400).send({ error: error.details[0].message });
-  }
-  storage
-    .saveUser(_.pick(req.body.user, ["name", "email", "password"]))
-    .then((user) => {
-      // const token = jwt.sign(
-      //   { _id: user._id, email: user.email, name: user.name },
-      //   settings.config.get("jwtPrivateKey")
-      // );
-      //x-auth-token is a random header name, it can be changed to anything else
-      res.header("x-auth-token", user.generateAuthToken()).send(_.pick(user, ["name", "email"]));
-    })
-    .catch((err) => {
-      next(err);
-    });
-  //Later will send JWT insted of users object.
-}
+
 
 function deleteUser(req, res, next) {
   try {
@@ -109,7 +84,6 @@ function updateUser(req, res, next) {
 module.exports = {
   init: init,
   getUser: getUser,
-  registerUser: registerUser,
   deleteUser: deleteUser,
   updateUser: updateUser,
 };

@@ -3,14 +3,13 @@ const Promise = require("bluebird");
 
 let db;
 let log;
-let settings;
 
 const UserModel = require("./models/user");
 function init(core, _db) {
-  settings = core.settings;
+  
   log = core.log;
   db = _db;
-  UserModel.init(settings, db);
+  UserModel.init(core, db);
 }
 function saveUser(user) {
   return new Promise((resolve, reject) => {

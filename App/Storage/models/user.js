@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
 
 let Mongoose;
-let settings;
+
+let config;
 let User;
 
-function init(_settings, _mongoose) {
-  settings = _settings;
+function init(core, _mongoose) {
+  
   Mongoose = _mongoose;
   User = Mongoose.model(
     "User",
@@ -35,7 +36,7 @@ function init(_settings, _mongoose) {
   User.prototype.generateAuthToken = function () {
     const token = jwt.sign(
       { _id: this._id, email: this.email, name: this.name },
-      settings.config.get("jwtPrivateKey")
+      config.get("jwtPrivateKey")
     );
     return token;
   };

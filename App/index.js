@@ -4,7 +4,7 @@ const runtime = require("./Runtime");
 
 function init(core) {
   storage.init(core);
-  core.storage=storage;
+  core.storage = storage;
 
   runtime.init(core);
   core.runtime=runtime;

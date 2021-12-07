@@ -74,12 +74,12 @@ body, html {
     <div class="dropdown">
         <button class="dropbtn">User Name</button>
         <div class="dropdown-content">
-          <a href="/user">Details</a>
-          <a href="/logout">logout</a>
+          <a href="api/user">Details</a>
+          <a href="auth/logout">logout</a>
         </div>
       </div>
     <div class="w3-col s3">
-      <a href="/logout" class="w3-button w3-block w3-black">Logout</a>
+      <a href="auth/logout" class="w3-button w3-block w3-black">Logout</a>
     </div>
   </div>
 </div>
@@ -176,7 +176,7 @@ body, html {
     <img src="/map.jpg" class="w3-image" style="width:100%">
     <p><span class="w3-tag">FYI!</span> We offer full-service catering for any event, large or small. We understand your needs and we will cater the food to satisfy the biggerst criteria of them all, both look and taste.</p>
     <p><strong>Reserve</strong> a table, ask for today's special or just send us a message:</p>
-    <form action="/action_page.php" target="_blank">
+    <form action="/reservation" target="_blank">
       <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Name" required name="Name"></p>
       <p><input class="w3-input w3-padding-16 w3-border" type="number" placeholder="How many people" required name="People"></p>
       <p><input class="w3-input w3-padding-16 w3-border" type="datetime-local" placeholder="Date and time" required name="date" value="2020-11-16T20:00"></p>

@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const compression = require("compression");
 const cookieParser = require('cookie-parser');
 const express = require("express");
-const googleAuth = require('./App/Runtime/auth/googleAuth');
 const helmet = require("helmet");
 const morgan = require("morgan");
 const session = require('express-session');
@@ -29,8 +28,6 @@ if(process.env.SESSION_SECRET === undefined) {
   process.exit(1);
 }
 
-//PASSPORT
-googleAuth.init(core);
 //TODO: using redis for session storage
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
@@ -82,7 +79,7 @@ if (config.get("serveStaticFiles")) app.use(express.static("public"));
 if (config.get("useMorgan")) app.use(morgan("tiny"));
 
 //API CALLS
-app.use("/api", api.router);
+app.use("/", api.router);
 
 app.get("/", (req, res, next) => {
   try {
@@ -90,27 +87,6 @@ app.get("/", (req, res, next) => {
   } catch (err) {
     next(err);
   }
-});
-app.get('/auth/google',
-  passport.authenticate('google', { scope: [ 'email', 'profile' ] }
-));
-app.get('/auth/google/callback',
-  passport.authenticate( 'google', {
-    successRedirect: '/home',
-    failureRedirect: '/auth/google/failure'
-  })
-);
-
-
-
-app.get('/logout', (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.redirect("/index.html");
-});
-
-app.get('/auth/google/failure', (req, res) => {
-  res.send('Failed to authenticate..');
 });
 
 app.use((err, req, res, next) => {

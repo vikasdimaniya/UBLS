@@ -4,11 +4,10 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 let GOOGLE_CLIENT_ID;
 let GOOGLE_CLIENT_SECRET;
 
-let settings;
 let log;
 
 function init(core) {
-  settings = core.settings;
+  
   log = core.log;
 
   if(process.env.GOOGLE_CLIENT_ID!=undefined){
@@ -29,7 +28,7 @@ function init(core) {
     new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "http://localhost:3000/api/auth/google/callback",
       passReqToCallback: true,
     },
     function(request, accessToken, refreshToken, profile, done) {

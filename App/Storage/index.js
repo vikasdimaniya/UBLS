@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const user = require("./user");
 
 //LOCAL MODULES
-let settings;
 let log;
 let config;
 let db;
@@ -12,7 +11,6 @@ let db;
 
 //EXPORTED FUNCTIONS
 function init(core) {
-  settings = core.settings;
   log = core.log;
   config = core.config;
   log.info(config.databaseURI);

@@ -1,13 +1,11 @@
 const auth = require("./auth");
 const user = require("./user");
-const validations = require("./validations");
 
-let settings;
 let log;
 
 function init(core){
-    settings = core._settings;
     log = core.log;
     auth.init(core);
+    user.init(core);
 }
-module.exports = { init: init };
+module.exports = { init: init, auth: auth, user: user };

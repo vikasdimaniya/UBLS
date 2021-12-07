@@ -1,8 +1,13 @@
-let settings;
+const local = require("./local");
+const google  =  require("./google");
+const localStrategy = require("./localStrategy");
+
 let log;
 
 function init(core){
-    settings=core._settings;
-    log=core.log;
+    log = core.log;
+    //local.init(core);
+    google.init(core);
+    localStrategy.init(core);
 }
-module.exports = { init: init};
+module.exports = { init: init, local: local};

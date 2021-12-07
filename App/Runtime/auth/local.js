@@ -4,16 +4,15 @@ const validations = require("../validations");
 
 let log;
 let storage;
-let settings;
 
 function init(core) {
-  settings = core.settings;
+  
   storage = core.storage;
   log = core.log;
 }
 
-//creating new user or registering
-function signup(req, res, next) {
+
+function login(req, res, next) {
   try{
     //validation for req.body
     //only pick the key which are acceptable. so user can't use api to save some other data.
@@ -52,4 +51,21 @@ function signup(req, res, next) {
     res.status(400).send({ msg: "Something went wrong! Probably not from your side." });
   }
 }
-module.exports = { init: init, signup: signup };
+function signupLocal(req, res, next) {
+  //validation for req.body
+  //only pick the key which are acceptable. so user can't use api to save some other data.
+  const error = validations.validate(
+    _.pick(req.body.user, ["name", "email", "password"])
+  );
+  if (error != true) {
+    log.error(error);
+    return res.status(400).send({ error: error.details[0].message });
+  }
+  storage.saveUser(_.pick(req.body.user, ["name", "email", "password"])).then((user) => {
+    res.header("x-auth-token", user.generateAuthToken()).send(_.pick(user, ["name", "email"]));
+  }).catch((err) => {
+    next(err);
+  });
+  //Later will send JWT insted of users object.
+}
+module.exports = { init: init, login: login, signupLocal: signupLocal };
