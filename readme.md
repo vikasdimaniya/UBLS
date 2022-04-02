@@ -1,4 +1,4 @@
-**UBLS (user based login system) it is a framework that is developed in node to create backend for user based( means have login mechanism) applications, It provides headstart to development of new product.**
+**UBLS (user based login system) it is a boilerplate for high throughput applications developed using node, mongodb(standalone/replicas), redis(TODO,with replication), oAuth and Elastic search(TODO, redis can be used for search but it won't be persistant if single node is used) to create microservices or a standalone server for user based( means some auth mechanism) applications, It provides headstart to development of new product that handle large amounts of data.**
 
 **_WINDOWS:_**  
 For development: set NODE_ENV=development  
@@ -35,12 +35,13 @@ use Completed, in-development to specify the status of below tasks:
 
 Completed: use winston insted of custom made logger
 
+Add redis.
 
 add nginx to serve static files  
 use docker
 use ESLint
+use env key module
 use node clusters https://nodejs.org/api/cluster.html  
-Add redis.
 https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/projectstructre/breakintcomponents.md vs current?  
 https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/projectstructre/separateexpress.md
 Use PINO ? vs winston  

@@ -6,7 +6,6 @@ const auth = require("./auth");
 //const user = require("./user");
 
 function init(core) {
-    user.init(core);
     auth.init(core);
     
     router.use("/auth", auth.router)
