@@ -37,6 +37,9 @@ Completed: use winston insted of custom made logger
 
 Add redis.
 
+use envkey.com
+use readme.com
+consider using fastify
 add nginx to serve static files  
 use docker
 use ESLint
@@ -45,8 +48,7 @@ use node clusters https://nodejs.org/api/cluster.html
 https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/projectstructre/breakintcomponents.md vs current?  
 https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/projectstructre/separateexpress.md
 Use PINO ? vs winston  
-Improve error handling, https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/errorhandling/centralizedhandling.md  
-require modules only if module is required by the end-user of UBLS  
+Improve error handling, https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/errorhandling/centralizedhandling.md   
 if port already in use then exit  
 add limit to api call size express.use(body.parser({limit:1mb}))  
 add log file and different options like to store in a single file or create new file every day  
